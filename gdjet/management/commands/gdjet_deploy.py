@@ -46,7 +46,17 @@ def deploy_static_symlinks( symlinks = [], SETTINGS = {} ):
 
 class Command(BaseCommand):
     help = ('Deploys paths according to settings, if its a gdjet project.',
-            'Optional argument is the project path')
+            'Optional argument is the project path',
+            'Define following in settings:',
+        'PROJECT_ROOT if you want to have a certain directory to be the root',
+        'STATIC_SYMLINKS which is a list of tuples, going through following:',
+        'a dictionary with entries is given to be substituted:',
+        ' PROJECT_ROOT with PROOT(=PROJECT_ROOT)',
+        ' STATIC=PROOT+static,APPS=PROOT+applications,PROJ=PROOT+project',
+        ' GRAPPELLI=grappelli path if grappelli is installed.',
+        ' Example:',
+        '  SYMLINKS=[(\'/opt/grappelli/media\', \'%(STATIC)s/grappelli\')]'
+            )
     requires_model_validation = True
     can_import_settings = True
 
@@ -58,12 +68,24 @@ class Command(BaseCommand):
             MY_DIR=getattr(settings, 'PROJECT_ROOT')
         else:
             MY_DIR = os.path.join( THIS_DIR, '../../../..' )
-        
+        # @todo: make this editable via settings.
         SETTINGS = {
                     'STATIC': '%s/static' % MY_DIR,
                     'APPS': '%s/applications' % MY_DIR,
-                    'PROJ': '%s/project' % MY_DIR
+                    'PROJ': '%s/project' % MY_DIR,
+                    #
+                    'PROJECT_ROOT': MY_DIR,
             }
+        
+        # grappelli add-on: @todo: common importing of a list of names
+        try:
+            import grappelli
+            gpath=os.path.abspath( os.path.dirname(
+                            os.path.join( os.getcwd(), grappelli.__file__ )) )
+            SETTINGS['GRAPPELLI']=gpath
+        except ImportError:
+            pass
+        
         SYMLINKS = getattr( settings, 'STATIC_SYMLINKS', [] )
         print "Project Path is %s" % os.path.abspath( MY_DIR )
         print "Deploying Project Symlinks."
