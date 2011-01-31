@@ -55,7 +55,7 @@ class Command(BaseCommand):
         ' STATIC=PROOT+static,APPS=PROOT+applications,PROJ=PROOT+project',
         ' GRAPPELLI=grappelli path if grappelli is installed.',
         ' Example:',
-        '  SYMLINKS=[(\'/opt/grappelli/media\', \'%(STATIC)s/grappelli\')]'
+        '  STATIC_SYMLINKS=[(\'%(GRAPPELLI)s/media\', \'%(STATIC)s/grappelli\')]'
             )
     requires_model_validation = True
     can_import_settings = True
