@@ -1,0 +1,11 @@
+Hello {{ user.username }}!
+
+You have registered successfully on our site.
+
+Your Activation Code is {{ code }}
+
+Following Link should instantly activate your account.
+{% url gdjet_validation_start %}?u={{ user.username }}&a={{ code }}
+
+Or you can go to {% url gdjet_validation_start %} and insert your code there. 
+

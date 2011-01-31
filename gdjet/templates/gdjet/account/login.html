@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if form.errors %}
+<p>Wrong Username / Password</p>
+{% else %}
+	{% if error %}
+	<p>Wrong Username / Password</p>
+	{% endif %}
+{% endif %}
+
+<form method="post" action="{% url gdjet_login %}">
+{% csrf_token %}
+<table>
+<tr>
+    <td>{{ form.username.label_tag }}</td>
+    <td>{{ form.username }}</td>
+</tr>
+<tr>
+    <td>{{ form.password.label_tag }}</td>
+    <td>{{ form.password }}</td>
+</tr>
+</table>
+
+<input type="submit" value="login" />
+{% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
+{% if next_url %}<input type="hidden" name="next_url" value="{{ next_url }}" />{% endif %}
+</form>
+{% endblock content %}

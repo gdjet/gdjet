@@ -1,0 +1,16 @@
+{% if error %}
+There was an Error with your submitted Data.
+{% endif %}
+
+{% if error_already_active %}
+You have already activated your account!
+If this information is incorrect please contact our support.
+Try to log in with your user, or if you have forgotten your password,
+use the appropriate function for it.
+{% endif %}
+
+<form action="{% url gdjet_validation_start %}" method="POST">
+{% csrf_token %}
+{{ form.as_p }}
+<button type="submit">Activate</button>
+</form>

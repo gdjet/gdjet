@@ -1,0 +1,6 @@
+Hello {{ user.username }}
+
+Your activation code is {{ code }}
+
+Please follow this link to activate your account:
+<a href="{% url gdjet_validation_start %}?u={{ user.username }}&a={{ code }}">Click here</a>

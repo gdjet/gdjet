@@ -1,0 +1,15 @@
+1.0:
+	Took over all g4bmanager and g4btools settings, but changed manager to use
+	a normal admin view to display data.
+	An extra view has to be created still.
+	Also reordered various tools for g4btools and enabled a system, where mod-
+	ules can be loaded and enabled by settings.py
+	
+	1.0 should feature: virtual templates/css/js handling, registering/getting
+	management variables like g4bmanager, monkeypatching, templatetags gtools,
+	widgets/fields for recaptcha, honeypot, timepot, imagefield, cooldate,...
+	
+	also 1.0 should introduce permy and genesis.
+	
+	1.0 SVN Revision: None yet.
+

@@ -1,0 +1,33 @@
+Manager
+=======
+
+The Manager consists of tools to manage global variables in your project in the
+database
+
+Plans:
+	:)	Saveable Variables (String, Text, Boolean) per Module
+	:(	Saveable Structs either as JSON or PHPSerialize.
+	:(	Management interface
+	:(	Genesis integration
+	:(	Loading technique which loads data into memory, to save database access.
+	
+1. Saveable Variables
+
+2. Saveable Structs
+
+3. Management Interface
+ManagerModule.admin offers custom views for every module, to set and retrieve
+variables.
+
+4. Genesis
+Manager management.py should be created with every genesis project.
+
+5. Loading Tech
+by defining a lockfile (/tmp/gdjet.????.lock) which is touched by the loaders
+upon saving data into the database, data is only loaded from database if access
+has been done since touchfile time was remembered.
+
+Upon first load every instance recreates the file, but then it is maintained
+by remembering the last date the file has.
+
+The whole loading cache technique maybe becomes a submodule.

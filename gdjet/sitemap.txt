@@ -1,0 +1,36 @@
+admin:
+	* all admin thingies. since we want to make it very customizable which admin thingies
+	are really loaded, we may introduce some way in settings to override which models get
+	loaded into admin. since django introspection has to work, this wont work for models 
+	i suppose.
+	* all admin forms have to register in subfiles, not in init.
+
+forms:
+	* all formextensions come here in an own file.
+	forms.widgets: load all widgets of your stuff here.
+	forms.fields: load all your fields here
+	
+	so this works:
+	from gdjet.forms import *
+	
+	or also this:
+	from gdjet.forms.widgets import stuff.
+
+urls:
+	* "admin.py": here all admin urls.
+	* else: there all other urls.
+
+models:
+	* create models in subfiles.
+	* for introspection, they have to be loaded in init. do they?
+	* abstract models, model mixins etc. are not loaded in init.
+	* proxy objects can reference their original and still reside in another file! cool!
+
+templatetags:
+	* group functions together please.
+
+templates:
+	* use subdirectories. try not to overwrite stuff in other things.
+	* monkey/ subdirectory for template opt-ins. e.g. admin_site.html
+	* monkey/examples/ for how to integrate that stuff.
+

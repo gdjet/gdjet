@@ -1,0 +1,5 @@
+dojo: 1.3.2
+dijit: 1.3.2
+dojox: 1.3.2
+
+jdgallery: 2.1beta1 with mootools 1.2

@@ -1,0 +1,59 @@
+/* manager css */
+
+#glog_manager_upper {
+	background: url("/static/glog_manager/upper_black.png") repeat top left;
+	background-color: #000000;
+	color: #FFFFFF;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.glog_manager_heading {
+	font-family: palatino, courier; 
+}
+
+#glog_manager_menu {
+	font-family: palatino, courier, monospace;
+	float: left;
+	width: 300px;
+}
+
+#glog_manager_content {
+	margin-top: 100px;	
+	
+}
+
+.glog_manager_menu_table {
+	text-align: right;	
+	text-decoration: underline;
+	text-transform: uppercase;
+	color: #000000;
+	border: none;
+	border-style: none;
+	border-right: 1px solid;
+	border-color: navy;
+	width: 80%;
+	vertical-align: top;
+}
+
+.glog_manager_menu_table td {
+	vertical-align: top;
+}
+
+.glog_manager_menu_table a {
+	text-decoration: underline;
+	text-transform: uppercase;
+	color: #000000;
+	
+}
+
+.glog_manager_menu_table a:hover {
+	text-decoration: underline;
+	text-transform: uppercase;
+	color: navy;
+	
+}
