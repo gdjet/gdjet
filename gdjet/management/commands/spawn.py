@@ -13,14 +13,12 @@ import sys
 from gdjet.utils.threads import ThreadWithExc
 
 class ParallelManageTask(ThreadWithExc):
-    def __init__(self, settings, argv, klass ):
+    def __init__(self, argv, klass ):
         super(self).__init__()
-        self.settings=settings
         self.argv=argv
         self.klass=klass
 
     def run(self):
-        #setup_environ(self.settings)
         self.utility = self.klass(self.argv)
         self.utility.execute()
         
@@ -35,12 +33,14 @@ class Command(BaseCommand):
     requires_model_validation = False
     def handle(self, *args, **options):
         from gdjet import settings
+        from django.core.management import setup_environ, ManagementUtility
         spawns = settings.SPAWNS
         for spawn in spawns:
             argv=sys.argv
             if isinstance(spawn, tuple):
                 spawn, argv = spawn
-            rt=ParallelManageTask(**argv)
+            rt=ParallelManageTask( argv=argv,
+                                   klass=ManagementUtility )
             rt.run_threaded()
             self.running_tasks+=[rt]
         try:
