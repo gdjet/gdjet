@@ -48,7 +48,7 @@ class Command(BaseCommand):
             self.running_tasks+=[rt]
         try:
             command = None
-            while not command in ['exit', 'x']:
+            while True:
                 command = raw_input(':)')
                 command = command.lower()
                 if command=='s' or command=='show':
@@ -57,9 +57,13 @@ class Command(BaseCommand):
                     print "help to be written yet"
                 elif command=='r' or command=='run':
                     for task in self.running_tasks:
-                        if not task.is_active:
-                            print "running task: "
+                        if not task.is_alive():
+                            print "running task: %s" % task.name
                             task.run_threaded()
+                elif command=='x' or command=='exit':
+                    # cleanups?
+                    print "bye!"
+                    sys.exit(0)
         except KeyboardInterrupt:
             # send KeyboardInterrupt to all child threads:
             for child in self.running_tasks:
