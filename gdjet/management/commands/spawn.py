@@ -20,7 +20,8 @@ class Command(BaseCommand):
         from gdjet import settings
         from django.core.management import setup_environ, ManagementUtility
         from gdjet.utils.threads import ThreadWithExc
-        class ParallelManageTask(ThreadWithExc):
+        from threading import Thread
+        class ParallelManageTask(Thread):
             def __init__(self, argv, klass ):
                 super(ParallelManageTask, self).__init__()
                 self.argv=argv
@@ -47,17 +48,27 @@ class Command(BaseCommand):
             self.running_tasks+=[rt]
         try:
             command = None
-            while command not in ['exit', 'x']:
-                command = raw_input(':)').lower()
+            while not command in ['exit', 'x']:
+                command = raw_input(':)')
+                command = command.lower()
                 if command=='s' or command=='show':
                     print "Running Tasks: %s" % len(self.running_tasks)
                 elif command=='h' or command=='help':
-                    print "at the moment only show/s or help/h or exit/x are available commands"    
+                    print "help to be written yet"
+                elif command=='r' or command=='run':
+                    for task in self.running_tasks:
+                        if not task.is_active:
+                            print "running task: "
+                            task.run_threaded()
         except KeyboardInterrupt:
             # send KeyboardInterrupt to all child threads:
             for child in self.running_tasks:
-                child.raiseExc(KeyboardInterrupt)
+                if isinstance(child, ThreadWithExc):
+                    child.raiseExc(KeyboardInterrupt)
             # now exit
             sys.exit(0)
-        
+        except:
+            import traceback
+            traceback.print_exc()
+            sys.exit(1)
             
