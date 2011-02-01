@@ -39,20 +39,20 @@ class Command(BaseCommand):
         self.running_tasks=[]
         
         for spawn in spawns:
-            argv=sys.argv
-            if isinstance(spawn, tuple):
-                spawn, argv = spawn
-            rt=ParallelManageTask( argv=argv,
+            if isinstance(spawn, basestring):
+                spawn = [ sys.argv[0], spawn ]
+            rt=ParallelManageTask( argv=spawn,
                                    klass=ManagementUtility )
             rt.run_threaded()
             self.running_tasks+=[rt]
         try:
-            command = None
             while True:
                 command = raw_input(':)')
                 command = command.lower()
                 if command=='s' or command=='show':
                     print "Running Tasks: %s" % len(self.running_tasks)
+                    for task in self.running_tasks:
+                        print "%s (%s)" % ( task.name, task.is_alive() )
                 elif command=='h' or command=='help':
                     print "help to be written yet"
                 elif command=='r' or command=='run':
@@ -64,15 +64,15 @@ class Command(BaseCommand):
                     # cleanups?
                     print "bye!"
                     sys.exit(0)
-        except KeyboardInterrupt:
-            # send KeyboardInterrupt to all child threads:
-            for child in self.running_tasks:
-                if isinstance(child, ThreadWithExc):
-                    child.raiseExc(KeyboardInterrupt)
-            # now exit
-            sys.exit(0)
+        #except KeyboardInterrupt:
+        #    # send KeyboardInterrupt to all child threads:
+        #    for child in self.running_tasks:
+        #        if isinstance(child, ThreadWithExc):
+        #            child.raiseExc(KeyboardInterrupt)
+        #    # now exit
+        #    sys.exit(0)
         except:
             import traceback
             traceback.print_exc()
-            sys.exit(1)
+            raise
             
