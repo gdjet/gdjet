@@ -41,6 +41,8 @@ class Command(BaseCommand):
         for spawn in spawns:
             if isinstance(spawn, basestring):
                 spawn = [ sys.argv[0], spawn ]
+            else:
+                spawn.insert(0, sys.argv[0])
             rt=ParallelManageTask( argv=spawn,
                                    klass=ManagementUtility )
             rt.run_threaded()
