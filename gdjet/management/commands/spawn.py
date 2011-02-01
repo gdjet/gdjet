@@ -9,22 +9,6 @@
     @author g4b
 """
 from django.core.management.base import BaseCommand
-import sys
-from gdjet.utils.threads import ThreadWithExc
-
-class ParallelManageTask(ThreadWithExc):
-    def __init__(self, argv, klass ):
-        super(ParallelManageTask, self).__init__()
-        self.argv=argv
-        self.klass=klass
-
-    def run(self):
-        self.utility = self.klass(self.argv)
-        self.utility.execute()
-        
-    def run_threaded(self):
-        self.daemon = True
-        self.start()
 
 class Command(BaseCommand):
     help = "Spawns multiple threads with management commands"
@@ -32,8 +16,24 @@ class Command(BaseCommand):
     # We do not work with models yet.
     requires_model_validation = False
     def handle(self, *args, **options):
+        import sys
         from gdjet import settings
         from django.core.management import setup_environ, ManagementUtility
+        from gdjet.utils.threads import ThreadWithExc
+        class ParallelManageTask(ThreadWithExc):
+            def __init__(self, argv, klass ):
+                super(ParallelManageTask, self).__init__()
+                self.argv=argv
+                self.klass=klass
+        
+            def run(self):
+                self.utility = self.klass(self.argv)
+                self.utility.execute()
+                
+            def run_threaded(self):
+                self.daemon = True
+                self.start()
+        
         spawns = settings.SPAWNS
         self.running_tasks=[]
         
