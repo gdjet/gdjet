@@ -64,8 +64,8 @@ class Command(BaseCommand):
                 spawn = [ sys.argv[0], spawn ]
             else:
                 spawn.insert(0, sys.argv[0])
-            so=ThreadPrinter(real_sys_so.stdout)
-            se=ThreadPrinter(real_sys_se.stderr)
+            so=ThreadPrinter(real_sys_so)
+            se=ThreadPrinter(real_sys_se)
             sys.stdout=so
             sys.stderr=se
             rt=ParallelManageTask( argv=spawn,
