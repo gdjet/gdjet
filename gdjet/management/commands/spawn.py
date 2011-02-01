@@ -6,6 +6,14 @@
     * All commands are executed in a thread
     * A simple control API is running in foreground.
     
+    define in settings.py something like:
+    
+    GDJET_SPAWNS = [
+                ['runserver', '--adminmedia', 'some/path'],
+                'celeryd',
+            ]
+    and multiple commands will be executed each within its own thread
+    
     @author g4b
 """
 from django.core.management.base import BaseCommand
