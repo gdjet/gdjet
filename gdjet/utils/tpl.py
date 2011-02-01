@@ -22,8 +22,10 @@ class BasicTPLHelper(object):
     def html(self):
         return self.__unicode__()
     
-    def extends(self):
-        return u'"%s"' % self.__unicode__()
+    def __hasattr__(self, attribute):
+        if attribute in ['render']:
+            return False
+        return True
 
 class PathAttributeSpawn(BasicTPLHelper):
     """
