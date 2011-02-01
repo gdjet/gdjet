@@ -18,7 +18,14 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 '''
 
-class PathAttributeSpawn(object):
+class BasicTPLHelper(object):
+    def html(self):
+        return self.__unicode__()
+    
+    def extends(self):
+        return u'"%s"' % self.__unicode__()
+
+class PathAttributeSpawn(BasicTPLHelper):
     """
         Spawned by the PathAttribute this class extends its own path
         at every getattr call.
@@ -37,7 +44,7 @@ class PathAttributeSpawn(object):
     def __repr__(self):
         return self.__unicode__()
 
-class PathAttribute(object):
+class PathAttribute(BasicTPLHelper):
     """
         An object which can hold a certain prefix and returns a path
         if accessed via attributes.
@@ -73,7 +80,7 @@ class PathAttribute(object):
             return PathAttributeSpawn( key, self.extension )
         return PathAttributeSpawn( u"%s/%s" % (self.path, key), self.extension )
 
-class PathAttributeReplicator(object):
+class PathAttributeReplicator(BasicTPLHelper):
     """
         Most safe way to create pathattributes, since they create new
         objects at each getattr, which is however slower.
