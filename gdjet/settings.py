@@ -133,6 +133,8 @@ REGISTER_EXPIRATIONDELTA = getattr(settings, 'GDJET_REGISTER_EXPIRATIONDELTA',
                             #set to None if you do not want expirations.
 REGISTER_OPEN = getattr(settings, 'GDJET_REGISTER_OPEN', False)
 
+# For spawn command:
+SPAWNS = getattr(settings, 'GDJET_SPAWNS', ['runserver',])
 
 # Last bit: we correct urls/paths.
 CORRECT_OSLASH = getattr(settings, 'GDJET_CORRECT_OSLASH', True)
