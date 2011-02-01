@@ -14,7 +14,7 @@ from gdjet.utils.threads import ThreadWithExc
 
 class ParallelManageTask(ThreadWithExc):
     def __init__(self, argv, klass ):
-        super(self).__init__()
+        super(ParallelManageTask, self).__init__()
         self.argv=argv
         self.klass=klass
 
@@ -35,6 +35,8 @@ class Command(BaseCommand):
         from gdjet import settings
         from django.core.management import setup_environ, ManagementUtility
         spawns = settings.SPAWNS
+        self.running_tasks=[]
+        
         for spawn in spawns:
             argv=sys.argv
             if isinstance(spawn, tuple):
@@ -53,7 +55,8 @@ class Command(BaseCommand):
                     print "at the moment only show/s or help/h or exit/x are available commands"    
         except KeyboardInterrupt:
             # send KeyboardInterrupt to all child threads:
-            
+            for child in self.running_tasks:
+                child.raiseExc(KeyboardInterrupt)
             # now exit
             sys.exit(0)
         
